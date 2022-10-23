@@ -2,9 +2,14 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import MenuIcon from '@mui/icons-material/Menu';
 import CancelIcon from '@mui/icons-material/Cancel';
+// import { selectCars } from '../feature/car/carSlice'
+// import { useSelector } from 'react-redux';
 
 
 function Header() {
+  const [bugerStatus, setBugerStatus] = useState(false);
+  // const car = useSelector(selectCars);
+
   return (
     <Container>
         <a>
@@ -20,11 +25,11 @@ function Header() {
         <RightMenu>
           <a href='#'>Shop</a>
           <a href='#'>Tesla Account</a>
-          <CustomMenu />
+          <CustomMenu onClick={() => setBugerStatus(true)}/>
         </RightMenu>
-        <BurgerNav>
+        <BurgerNav  show={bugerStatus}>
           <CloseWrapper>
-            <CustomClose />
+            <CustomClose onClick={() =>setBugerStatus(false)}/>
           </CloseWrapper>
           <li><a href='#'>Existing Inventory</a></li>
           <li><a href='#'>Use Inventory</a></li>
@@ -93,7 +98,8 @@ const BurgerNav = styled.div`
   display: flex;
   flex-direction: column;
   text-align: start;
-
+  transform: ${props => props.show ? 'translateX(0)': 'translateX(100%)' };
+  transition: transform 0.2s;
   li {
     padding: 15px 0;
     border-bottom: 1px solid rgba(0, 0, 0, .2);
